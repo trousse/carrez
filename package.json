@@ -1,0 +1,13 @@
+{
+  "name": "carrez",
+  "version": "0.0.1",
+  "dependencies": {
+    "api-easy": "^0.4.0",
+    "body-parser": "^1.16.0",
+    "express": "*",
+    "website-scraper": "^2.0.0"
+  },
+  "scripts": {
+    "test": "vows test/test-rest.js"
+  }
+}
