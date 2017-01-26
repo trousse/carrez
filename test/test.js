@@ -1,7 +1,7 @@
-const PORT = 8080;
+const PORT = 3000;
 
 var assert = require('assert')
-  var app = require('../server')
+var app = require('../server')
 
 
 require('api-easy')
@@ -13,6 +13,7 @@ require('api-easy')
 .setHeader('Accept', 'application/json')
 .post({
   'url':"https://www.leboncoin.fr/ventes_immobilieres/1076257949.htm?ca=12_s"
+  //'url':"https://www.google.fr/search?q=principalement&ie=utf-8&oe=utf-8&client=firefox-b-ab&gfe_rd=cr&ei=n8OFWPTtBpDFaPSqkhg"
 })
 .expect('Has ID', function (err, res, body) {
 
