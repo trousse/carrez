@@ -69,13 +69,27 @@ app.post('/resultat',function(req,res){
        uri: "https://www.meilleursagents.com/prix-immobilier/"+house.city+'-'+house.cp,
        method: "GET"
      },function getHouseData(error, response, body){
-
-        console.log(body);
-        res.respond("yo",200);
-      //  div.medium-uncollapse:nth-child(3) > div:nth-child(3) maison
-      //  div.medium-uncollapse:nth-child(2) > div:nth-child(3)  appartemant 
+        if(error)reject(error,404);
+        else{
+          var regex = /(: \d+(\d)*)/g;
+          let bestAgent =  scrape.load(body);
+           var area = bestAgent("meta[name=description]")
+          .prop('content')
+          .match(regex);
+          if(house.type == 'maison')area = area[0].slice(2);
+          else{ area = area[1].slice(2);}
+          house.areaPrice = area;
+          resolve(house);
+        }
       });
-    });
+    })
+    .catch(function(err,code){res.respond(err,code);})
+    .then(function(house){
+       var value = house.prix/house.surface ;
+       if(value<house.areaPrice )res.respond({BeAGoodTrade:true},200);
+       else{res.respond({BeAGoodTrade:false},200);}
+  });
+
   });
 });
 

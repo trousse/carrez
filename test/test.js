@@ -21,7 +21,7 @@ require('api-easy')
   assert.doesNotThrow(function() { obj = JSON.parse(body) }, SyntaxError);
   assert.isObject(obj);
   assert.include(obj, 'BeAGoodTrade');
-  assert.equal(true, obj.BeAGoodTrade);
+  assert.equal(false, obj.BeAGoodTrade);
   console.log("sa marhe");
 }).next()
 
