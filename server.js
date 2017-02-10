@@ -34,15 +34,20 @@ app.post('/resultat',function(req,res){
         var houseData ;
 
         BonCoin('script').each(function(i, elem) {
-          if(i==7){
+
+          var found =BonCoin(this).text();
+          var reg = new RegExp(/var utag_data/);
+          if(reg.exec(found)!=null){
             var guillemet = "\"";
 
             var jsonFormat = BonCoin(this).text().slice(27).split('\n')
-            .splice(14,24)
+            .splice(14,27)
             .map(function(line,index){
+
               var tab =   line.split(' ');
               tab[tab.length - 3] =   guillemet.concat(tab[tab.length-3]).concat(guillemet);
               line = tab.join(' ');
+              
               return line;
             })
             .join('\n')
@@ -65,8 +70,18 @@ app.post('/resultat',function(req,res){
 
 
   var areaData = new Promise((resolve, reject) => {
+  //  console.log(house.city.length);
+  var city = "";
+    for(var i =0;i<house.city.length;i++){
+
+      if(house.city[i]=="_")
+        {city += "-";}
+        else {
+          city += house.city[i];
+        }
+    }
     request({
-       uri: "https://www.meilleursagents.com/prix-immobilier/"+house.city+'-'+house.cp,
+       uri: "https://www.meilleursagents.com/prix-immobilier/"+city+'-'+house.cp,
        method: "GET"
      },function getHouseData(error, response, body){
         if(error)reject(error,404);
@@ -76,6 +91,7 @@ app.post('/resultat',function(req,res){
            var area = bestAgent("meta[name=description]")
           .prop('content')
           .match(regex);
+          console.log(area[1]);
           if(house.type == 'maison')area = area[0].slice(2);
           else{ area = area[1].slice(2);}
           house.areaPrice = area;

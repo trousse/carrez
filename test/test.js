@@ -12,7 +12,7 @@ require('api-easy')
 .setHeader('Content-Type', 'application/json')
 .setHeader('Accept', 'application/json')
 .post({
-  'url':"https://www.leboncoin.fr/ventes_immobilieres/1076257949.htm?ca=12_s"
+  'url':"https://www.leboncoin.fr/ventes_immobilieres/1087285711.htm?ca=12_s"
   //'url':"https://www.google.fr/search?q=principalement&ie=utf-8&oe=utf-8&client=firefox-b-ab&gfe_rd=cr&ei=n8OFWPTtBpDFaPSqkhg"
 })
 .expect('Has ID', function (err, res, body) {
@@ -22,7 +22,7 @@ require('api-easy')
   assert.isObject(obj);
   assert.include(obj, 'BeAGoodTrade');
   assert.equal(false, obj.BeAGoodTrade);
-  console.log("sa marhe");
+
 }).next()
 
 /*.del('/R')
